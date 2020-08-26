@@ -1,3 +1,5 @@
+include .env
+
 ENV=local
 APP=redditlinks
 
@@ -25,3 +27,12 @@ test:
 .PHONY: requirements
 requirements:
 	pipenv lock -r > requirements.txt
+
+.PHONY: container
+container:
+	gcloud builds --project $(GCP_PROJECT_ID) submit --tag gcr.io/$(GCP_PROJECT_ID)/$(APP)
+
+.PHONY: deploy
+deploy:
+	gcloud run --project $(GCP_PROJECT_ID) deploy --image gcr.io/$(GCP_PROJECT_ID)/$(APP) --platform managed
+
