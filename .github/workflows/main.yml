@@ -9,6 +9,9 @@ jobs:
       with:
         python-version: '3.6'
         architecture: 'x64'
+    - name: install pytest
+      run: |
+        pip install pytest==6.0.1 requests==2.24.0
     - name: make build
       run: |
         make build
